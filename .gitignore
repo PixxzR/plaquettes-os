@@ -12,7 +12,7 @@ __pycache__/
 *.pyd
 
 # Dossiers générés automatiquement (laisser vide dans le repo)
-html_plaquettes/
+# html_plaquettes/
 
 # Fichiers d'environnement (si présents)
 .env
