@@ -1,0 +1,68 @@
+Conversion automatique des plaquettes PDF vers HTML
+
+Ce dépôt contient des scripts et workflows GitHub Actions permettant d’automatiser la conversion de plaquettes produit au format PDF en pages HTML pour un accès facilité et dynamique via GitHub Pages.
+
+🚀 Fonctionnalités
+	•	Conversion automatique d’un fichier PDF en une image PNG (première page uniquement).
+	•	Génération automatique d’une page HTML intégrant cette image.
+	•	Déploiement facilité via GitHub Pages.
+
+📁 Structure du projet
+
+.
+├── plaquettes/
+│   └── (Vos plaquettes PDF ici)
+├── html_plaquettes/
+│   └── (Fichiers HTML et PNG générés automatiquement)
+├── scripts/
+│   └── convert_pdf_to_html.py
+└── .github/
+    └── workflows/
+        └── convert_pdf_to_html.yml
+
+🔧 Dépendances
+	•	Python 3.11
+	•	pdf2image
+	•	Pillow
+	•	Poppler-utils
+
+🛠️ Mise en place
+	1.	Clonez le dépôt :
+
+git clone https://github.com/France-Travail/plaquettes-produits-os.git
+
+	2.	Installez les dépendances :
+
+pip install pdf2image pillow
+sudo apt-get install -y poppler-utils
+
+	3.	Déposez vos plaquettes PDF :
+
+Ajoutez vos fichiers PDF dans le dossier :
+
+plaquettes/
+
+	4.	Conversion automatique (via GitHub Actions) :
+
+Chaque PDF ajouté déclenche automatiquement une conversion grâce au workflow GitHub Actions inclus.
+
+🌐 Accès aux plaquettes
+
+Après la conversion, deux liens sont disponibles :
+	•	Lien PDF original :
+https://github.com/France-Travail/plaquettes-produits-os/plaquettes/nomplaquette.pdf
+	•	Lien HTML dynamique :
+https://france-travail.github.io/plaquettes-produits-os/html_plaquettes/nomplaquette.html
+
+🔑 Configuration GitHub Actions
+
+Pour activer l’automatisation :
+	•	Ajoutez un secret nommé GH_PAT contenant un Personal Access Token dans les paramètres du dépôt GitHub.
+
+📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus d’informations.
+
+⸻
+
+© France Travail – 2025

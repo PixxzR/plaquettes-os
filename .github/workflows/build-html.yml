@@ -1,0 +1,66 @@
+name: Conversion automatique PDF vers HTML
+
+on:
+  push:
+    paths:
+      - "plaquettes/**/*.pdf"
+      - "scripts/convert_pdf_to_html.py"
+      - ".github/workflows/convert_pdf_to_html.yml"
+
+jobs:
+  convert-pdf-to-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout du dépôt
+        uses: actions/checkout@v4
+
+      - name: 🐍 Installation de Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 📦 Installation des dépendances Python
+        run: |
+          python -m pip install --upgrade pip
+          pip install pdf2image pillow
+
+      - name: 🔧 Installation de Poppler (dépendance pdf2image)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+
+      - name: 📁 Préparation du dossier de sortie
+        run: |
+          mkdir -p html_plaquettes
+
+      - name: 🚀 Exécution du script de conversion PDF ➜ HTML
+        run: |
+          python scripts/convert_pdf_to_html.py
+
+      - name: 🔑 Vérification de la présence du token GH_PAT
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -z "$GH_PAT" ]; then
+            echo "❌ ERREUR : Le secret GH_PAT n'est pas configuré."
+            exit 1
+          else
+            echo "✅ GH_PAT présent."
+          fi
+
+      - name: 📤 Commit et Push des fichiers générés
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          git add html_plaquettes/*.html html_plaquettes/*.png || true
+
+          if git diff --cached --quiet; then
+            echo "ℹ️ Aucun changement détecté, pas de commit nécessaire."
+          else
+            git commit -m "🖼️ Génération automatique des plaquettes HTML depuis PDF"
+            git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git
+          fi

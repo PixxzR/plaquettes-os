@@ -1,0 +1,22 @@
+# Fichiers système MacOS
+.DS_Store
+
+# Environnement virtuel Python
+.venv/
+venv/
+
+# Fichiers de cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Dossiers générés automatiquement (laisser vide dans le repo)
+html_plaquettes/
+
+# Fichiers d'environnement (si présents)
+.env
+*.env
+
+# Autres fichiers générés
+*.log
